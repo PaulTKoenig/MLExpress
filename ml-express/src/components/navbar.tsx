@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar } from "react-pro-sidebar";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
-import ReceiptRoundedIcon from "@mui/icons-material/ReceiptRounded";
-import BarChartRoundedIcon from "@mui/icons-material/BarChartRounded";
-import TimelineRoundedIcon from "@mui/icons-material/TimelineRounded";
-import BubbleChartRoundedIcon from "@mui/icons-material/BubbleChartRounded";
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import AssistWalker from "@mui/icons-material/AssistWalker";
+import Info from "@mui/icons-material/Info";
+import Cottage from "@mui/icons-material/Cottage";
+import PlayCircle from "@mui/icons-material/PlayCircle";
+import ModelTraining from "@mui/icons-material/ModelTraining";
+import Preview from "@mui/icons-material/Preview";
+import UploadFile from "@mui/icons-material/UploadFile";
+import AutoFixHigh from "@mui/icons-material/AutoFixHigh";
 
 const Navbar: React.FC = () => {
     const { collapseSidebar } = useProSidebar();
@@ -27,29 +29,39 @@ const Navbar: React.FC = () => {
                             />
                         }
                     >
-                        <h2>MLEXPRESS</h2>
+                        <h2><strong>MLEXPRESS</strong></h2>
                     </MenuItem>
-                    <MenuItem icon={<GridViewRoundedIcon />}> Home </MenuItem>
-                    <MenuItem icon={<ReceiptRoundedIcon />}> Tutorial </MenuItem>
-                    <SubMenu label="Create Model" icon={<BarChartRoundedIcon />}>
-                        <SubMenu label="Upload Dataset" icon={<BarChartRoundedIcon />}>
-                            <MenuItem icon={<TimelineRoundedIcon />}> Timeline Chart </MenuItem>
-                            <MenuItem icon={<BubbleChartRoundedIcon />}>Bubble Chart</MenuItem>
+                    <MenuItem 
+                        component={<Link to="/" />}
+                        icon={<Cottage />}
+                    >
+                        Home
+                    </MenuItem>
+                    <MenuItem icon={<AssistWalker />}> Tutorial </MenuItem>
+                    <SubMenu label="Create Model" icon={<ModelTraining />}>
+                        <SubMenu label="Upload Dataset" icon={<UploadFile />}>
+                            <MenuItem 
+                                component={<Link to="/create-model/upload-dataset" />}
+                            > 
+                                Upload Dataset
+                            </MenuItem>
+                            <MenuItem 
+                                component={<Link to="/create-model/preprocessing" />}
+                            >
+                                View Full Dataset
+                            </MenuItem>
                         </SubMenu>
-                        <SubMenu label="Preprocessing" icon={<BarChartRoundedIcon />}>
-                            <MenuItem icon={<TimelineRoundedIcon />}> Timeline Chart </MenuItem>
-                            <MenuItem icon={<BubbleChartRoundedIcon />}>Bubble Chart</MenuItem>
+                        <SubMenu label="Preprocessing" icon={<AutoFixHigh />}>
+                            <MenuItem> Preprocess </MenuItem>
                         </SubMenu>
-                        <SubMenu label="Train Model" icon={<BarChartRoundedIcon />}>
-                            <MenuItem icon={<TimelineRoundedIcon />}> Timeline Chart </MenuItem>
-                            <MenuItem icon={<BubbleChartRoundedIcon />}>Bubble Chart</MenuItem>
+                        <SubMenu label="Train Model" icon={<PlayCircle />}>
+                            <MenuItem> Train </MenuItem>
                         </SubMenu>
-                        <SubMenu label="View Results" icon={<BarChartRoundedIcon />}>
-                            <MenuItem icon={<TimelineRoundedIcon />}> Timeline Chart </MenuItem>
-                            <MenuItem icon={<BubbleChartRoundedIcon />}>Bubble Chart</MenuItem>
+                        <SubMenu label="View Results" icon={<Preview />}>
+                            <MenuItem> View </MenuItem>
                         </SubMenu>
                     </SubMenu>
-                    <MenuItem icon={<LogoutRoundedIcon />}> About Us </MenuItem>
+                    <MenuItem icon={<Info />}> About Us </MenuItem>
                 </Menu>
             </Sidebar>
         </div>
