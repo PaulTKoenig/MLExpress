@@ -6,7 +6,7 @@ interface CsvTableProps {
 
 const CsvTableFull: React.FC<CsvTableProps> = ({ data }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 20;
+  const rowsPerPage = 15;
 
   if (data.length === 0) {
     return <p>No data to display</p>;
@@ -27,6 +27,24 @@ const CsvTableFull: React.FC<CsvTableProps> = ({ data }) => {
   const handlePrevPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
   };
+
+  const displayPageChangeBtn = () => {
+    if (totalPages > 1) {
+      return (
+        <div className='text-center p-8' style={{ marginTop: '10px', textAlign: 'center' }}>
+          <button onClick={handlePrevPage} disabled={currentPage === 1}>
+            Previous Page
+          </button>
+          <span style={{ margin: '0 10px' }}>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+            Next Page
+          </button>
+        </div>
+      )
+    }
+  }
 
   return (
     <div>
@@ -52,17 +70,7 @@ const CsvTableFull: React.FC<CsvTableProps> = ({ data }) => {
           ))}
         </tbody>
       </table>
-      <div style={{ marginTop: '10px', textAlign: 'center' }}>
-        <button onClick={handlePrevPage} disabled={currentPage === 1}>
-          Previous Page
-        </button>
-        <span style={{ margin: '0 10px' }}>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          Next Page
-        </button>
-      </div>
+      {displayPageChangeBtn()}
     </div>
   );
 };

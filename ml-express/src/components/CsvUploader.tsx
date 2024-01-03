@@ -2,7 +2,7 @@ import React, { ChangeEvent, DragEvent, useState, useRef } from 'react';
 import Papa from 'papaparse';
 
 interface CsvUploaderProps {
-  onUpload: (data: any[]) => void;
+  onUpload: (data: any[], headers: string[]) => void;
 }
 
 const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
@@ -15,7 +15,6 @@ const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
       setFile(selectedFile);
       parseCsvFile(selectedFile);
     }
-    console.log(selectedFile)
   };
 
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -34,8 +33,8 @@ const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
           header: true,
         });
 
-        if (csvData.data) {
-          onUpload(csvData.data);
+        if (csvData.meta && csvData.meta.fields) {
+          onUpload(csvData.data, csvData.meta.fields);
         }
       }
     };
@@ -60,7 +59,7 @@ const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
       style={{
         border: '2px dashed #aaa',
         borderRadius: '5px',
-        padding: '20px',
+        padding: '40px 60px',
         textAlign: 'center',
         cursor: 'pointer',
       }}

@@ -15,11 +15,10 @@ const Navbar: React.FC = () => {
     const { collapseSidebar } = useProSidebar();
 
     return (
-        <div className='h-screen'>
-            <Sidebar className="app">
+        <div className="min-h-screen flex">
+            <Sidebar className="">
                 <Menu>
                     <MenuItem
-                        component={<Link to="/" className="home" />}
                         className="menu1"
                         icon={
                             <MenuRoundedIcon
@@ -31,7 +30,7 @@ const Navbar: React.FC = () => {
                     >
                         <h2><strong>MLEXPRESS</strong></h2>
                     </MenuItem>
-                    <MenuItem 
+                    <MenuItem
                         component={<Link to="/" />}
                         icon={<Cottage />}
                     >
@@ -40,12 +39,12 @@ const Navbar: React.FC = () => {
                     <MenuItem icon={<AssistWalker />}> Tutorial </MenuItem>
                     <SubMenu label="Create Model" icon={<ModelTraining />}>
                         <SubMenu label="Upload Dataset" icon={<UploadFile />}>
-                            <MenuItem 
+                            <MenuItem
                                 component={<Link to="/create-model/upload-dataset" />}
-                            > 
+                            >
                                 Upload Dataset
                             </MenuItem>
-                            <MenuItem 
+                            <MenuItem
                                 component={<Link to="/create-model/preprocessing" />}
                             >
                                 View Full Dataset
