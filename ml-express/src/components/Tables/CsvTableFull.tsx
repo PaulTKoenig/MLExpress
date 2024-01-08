@@ -31,7 +31,7 @@ const CsvTableFull: React.FC<CsvTableProps> = ({ data }) => {
   const displayPageChangeBtn = () => {
     if (totalPages > 1) {
       return (
-        <div className='text-center p-8' style={{ marginTop: '10px', textAlign: 'center' }}>
+        <div className='text-center p-8'>
           <button onClick={handlePrevPage} disabled={currentPage === 1}>
             Previous Page
           </button>
@@ -47,31 +47,33 @@ const CsvTableFull: React.FC<CsvTableProps> = ({ data }) => {
   }
 
   return (
-    <div>
-      <table style={{ borderCollapse: 'collapse', width: '100%' }}>
-        <thead>
-          <tr>
-            {headers.map((header) => (
-              <th key={header} style={{ border: '1px solid #ddd', padding: '8px' }}>
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {currentRows.map((row, rowIndex) => (
-            <tr key={rowIndex}>
+    <>
+      <div className="overflow-x-auto">
+        <table className="border-collapse w-auto">
+          <thead>
+            <tr>
               {headers.map((header) => (
-                <td key={header} style={{ border: '1px solid #ddd', padding: '8px' }}>
-                  {row[header]}
-                </td>
+                <th className='whitespace-nowrap' key={header} style={{ border: '1px solid #ddd', padding: '8px' }}>
+                  {header}
+                </th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentRows.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {headers.map((header) => (
+                  <td className='whitespace-nowrap' key={header} style={{ border: '1px solid #ddd', padding: '8px' }}>
+                    {row[header]}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {displayPageChangeBtn()}
-    </div>
+    </>
   );
 };
 

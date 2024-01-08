@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function convertStringToType(input: string): number | boolean | string {
 
@@ -29,6 +29,17 @@ interface CsvColumnInfoProps {
 }
 
 const CsvColumnInfo: React.FC<CsvColumnInfoProps> = ({ headers, data }) => {
+
+    const rowsPerPage = 15;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const totalRows = headers.length;
+    const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+    const startIdx = (currentPage - 1) * rowsPerPage;
+    const endIdx = currentPage * rowsPerPage;
+
+
     const getColumnStats = (columnName: string) => {
         const values = data.map((row) => row[columnName]);
 
@@ -83,27 +94,54 @@ const CsvColumnInfo: React.FC<CsvColumnInfoProps> = ({ headers, data }) => {
         )
     }
 
+    const displayPageChangeBtn = () => {
+        if (totalPages > 1) {
+            return (
+                <div className='text-center pt-8'>
+                    <button
+                        onClick={() => setCurrentPage(currentPage - 1)}
+                        disabled={currentPage === 1}
+                    >
+                        Previous Page
+                    </button>
+                    <span style={{ margin: '0 10px' }}>
+                        Page {currentPage} of {totalPages}
+                    </span>
+                    <button
+                        onClick={() => setCurrentPage(currentPage + 1)}
+                        disabled={endIdx >= totalRows}
+                    >
+                        Next Page
+                    </button>
+                </div>
+            )
+        }
+    }
+
     return (
-        <table style={{ borderCollapse: 'collapse', width: '100%', marginTop: '20px' }}>
-            <thead>
-                <tr>
-                    <th style={cellStyle}>Column Name</th>
-                    <th style={cellStyle}>Data Type</th>
-                    <th style={cellStyle}>Minimum Value</th>
-                    <th style={cellStyle}>Maximum Value</th>
-                    <th style={cellStyle}>Mean Value</th>
-                    <th style={cellStyle}>Null Values</th>
-                    <th style={cellStyle}>Example Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                {headers.map((columnName) => (
-                    <tr key={columnName}>
-                        {data.length > 0 && getColumnDetails(columnName)}
+        <div>
+            <table style={{ borderCollapse: 'collapse', width: '100%', marginTop: '20px' }}>
+                <thead>
+                    <tr>
+                        <th style={cellStyle}>Column Name</th>
+                        <th style={cellStyle}>Data Type</th>
+                        <th style={cellStyle}>Minimum Value</th>
+                        <th style={cellStyle}>Maximum Value</th>
+                        <th style={cellStyle}>Mean Value</th>
+                        <th style={cellStyle}>Null Values</th>
+                        <th style={cellStyle}>Example Value</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {headers.slice(startIdx, endIdx).map((columnName) => (
+                        <tr key={columnName}>
+                            {data.length > 0 && getColumnDetails(columnName)}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+            {displayPageChangeBtn()}
+        </div>
     );
 };
 

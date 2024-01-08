@@ -1,20 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
 
-export type UploadedData = any[];
+export interface UploadedData {
+  headers: string[];
+  data: any[];
+}
 
-const initialState: UploadedData[] = [];
+const initialState: UploadedData = { headers: [], data: []};
 
 export const uploadedDataSlice = createSlice({
   name: "file",
   initialState,
   reducers: {
-    setUploadedData: (state, action: PayloadAction<UploadedData[]>) => {
-      console.log(action.payload)
+    setUploadedData: (state, action: PayloadAction<UploadedData>) => {
       return action.payload; // Create a new state array
     },
   },
 });
+
 export const { setUploadedData } = uploadedDataSlice.actions;
 export const uploadedDataSelector = (state: RootState) => state.uploadedDataReducer;
 export default uploadedDataSlice.reducer;

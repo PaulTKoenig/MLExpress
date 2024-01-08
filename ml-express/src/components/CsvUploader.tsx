@@ -1,8 +1,9 @@
 import React, { ChangeEvent, DragEvent, useState, useRef } from 'react';
+import { UploadedData } from "../features/uploaded_data/uploadedDataSlice";
 import Papa from 'papaparse';
 
 interface CsvUploaderProps {
-  onUpload: (data: any[], headers: string[]) => void;
+  onUpload: (dataset: UploadedData) => void;
 }
 
 const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
@@ -34,7 +35,7 @@ const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
         });
 
         if (csvData.meta && csvData.meta.fields) {
-          onUpload(csvData.data, csvData.meta.fields);
+          onUpload({ headers: csvData.meta.fields, data: csvData.data });
         }
       }
     };
