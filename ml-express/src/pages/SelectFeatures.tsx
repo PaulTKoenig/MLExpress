@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { MuiTableFull } from "../components/Tables/MuiTableFull";
+import { MuiTableSelectable } from "../components/Tables/MuiTableSelectable";
 import { useAppSelector } from "../hooks";
 import { UploadedData, uploadedDataSelector } from "../features/uploaded_data/uploadedDataSlice";
 
-const ViewFullDataset: React.FC = () => {
+const SelectFeatures: React.FC = () => {
 
 	const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [] });
 
@@ -15,12 +15,12 @@ const ViewFullDataset: React.FC = () => {
 
 	return (
 		<div className='container m-16 ml-28'>
-			<div className='mb-8 text-3xl font-bold'>View Full Dataset</div>
-			<div className='p-8 justify-center'>
-				<MuiTableFull data={uploadedData.data} headers={uploadedData.headers} />
+			<div className='mb-8 text-3xl font-bold'>Select Features</div>
+            <div className='p-8 justify-center'>
+				<MuiTableSelectable data={uploadedData.data} headers={uploadedData.headers} />
 			</div>
 		</div>
 	);
 }
 
-export default ViewFullDataset;
+export default SelectFeatures;

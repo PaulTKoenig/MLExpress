@@ -48,11 +48,17 @@ const DataExploration: React.FC = () => {
 	}
 
 	return (
-		<div>
+		<div className='container m-16 ml-28'>
 			<h2 className="text-3xl font-bold underline">Data Exploration</h2>
 			<ScatterPlot data={getPlotData(xAxis, yAxis)} width={500} height={500} xDomain={handleDomain(xAxis)} yDomain={handleDomain(yAxis)} />
-			<DropdownSelect options={csvData.headers} label={"X Axis"} selection={xAxis} handleChange={handleXAxisChange} />
-			<DropdownSelect options={csvData.headers} label={"Y Axis"} selection={yAxis} handleChange={handleYAxisChange} />
+			<div className='w-1/4'>
+				<div className=''>
+					<DropdownSelect options={csvData.headers} label={"X Axis"} selection={xAxis} handleChange={handleXAxisChange} />
+				</div>
+				<div className='mt-5'>
+					<DropdownSelect options={csvData.headers} label={"Y Axis"} selection={yAxis} handleChange={handleYAxisChange} />
+				</div>
+			</div>
 		</div>
 	)
 };

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppSelector } from "../hooks";
 import { UploadedData, uploadedDataSelector } from "../features/uploaded_data/uploadedDataSlice";
-import CsvTableFull from "../components/Tables/CsvTableFull";
+import { MuiTableFull } from "../components/Tables/MuiTableFull";
 
 const UploadDataset: React.FC = () => {
 
@@ -38,13 +38,11 @@ const UploadDataset: React.FC = () => {
         return duplicatesArray;
     };
 
-    console.log(findDuplicates())
-
     return (
         <div className='container m-16 ml-28'>
             <div className='mb-8 text-3xl font-bold'>Handle Duplicates</div>
             <div className='p-8 justify-center'>
-                <CsvTableFull data={findDuplicates()} />
+                <MuiTableFull data={findDuplicates()} headers={uploadedData.headers} />
             </div>
         </div>
     );

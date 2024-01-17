@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CsvUploader from '../components/CsvUploader';
-import CsvTableDetails from '../components/Tables/CsvTableDetails';
+import { MuiTableDetails } from '../components/Tables/MuiTableDetails';
 import PreviewDataModal from '../components/PreviewDataModal';
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { UploadedData, setUploadedData, uploadedDataSelector } from "../features/uploaded_data/uploadedDataSlice";
@@ -28,7 +28,7 @@ const UploadDataset: React.FC = () => {
 				<div className='p-16 justify-center'>
 					{csvData.data.length > 0 ? (
 						<>
-							<CsvTableDetails headers={csvData.headers} data={csvData.data} />
+							<MuiTableDetails headers={csvData.headers} data={csvData.data} />
 							<PreviewDataModal data={csvData.data} />
 						</>
 					) : null}
