@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar } from "react-pro-sidebar";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import AssistWalker from "@mui/icons-material/AssistWalker";
@@ -13,6 +13,7 @@ import AutoFixHigh from "@mui/icons-material/AutoFixHigh";
 
 const Navbar: React.FC = () => {
     const { collapseSidebar } = useProSidebar();
+    const location = useLocation();
 
     return (
         <div className="min-h-screen flex">
@@ -32,6 +33,7 @@ const Navbar: React.FC = () => {
                     </MenuItem>
                     <MenuItem
                         component={<Link to="/" />}
+                        style={{ backgroundColor: location.pathname === "/" ? '#D3ECF3' : '' }}
                         icon={<Cottage />}
                     >
                         Home
@@ -41,11 +43,13 @@ const Navbar: React.FC = () => {
                         <SubMenu label="Upload Dataset" icon={<UploadFile />}>
                             <MenuItem
                                 component={<Link to="/create-model/upload-dataset/import-file" />}
+                                style={{ backgroundColor: location.pathname === "/create-model/upload-dataset/import-file" ? '#D3ECF3' : '' }}
                             >
                                 Import File
                             </MenuItem>
                             <MenuItem
-                                component={<Link to="/create-model/upload-dataset/preprocessing" />}
+                                component={<Link to="/create-model/upload-dataset/view-full-dataset" />}
+                                style={{ backgroundColor: location.pathname === "/create-model/upload-dataset/view-full-dataset" ? '#D3ECF3' : '' }}
                             >
                                 View Full Dataset
                             </MenuItem>
@@ -53,11 +57,13 @@ const Navbar: React.FC = () => {
                         <SubMenu label="Data Exploration" icon={<AutoFixHigh />}>
                             <MenuItem
                                 component={<Link to="/create-model/data-exploration/handle-duplicates" />}
+                                style={{ backgroundColor: location.pathname === "/create-model/data-exploration/handle-duplicates" ? '#D3ECF3' : '' }}
                             >
                                 Handle Duplicates
                             </MenuItem>
                             <MenuItem
-                                component={<Link to="/" />}
+                                component={<Link to="/create-model/data-exploration/handle-outliers" />}
+                                style={{ backgroundColor: location.pathname === "/create-model/data-exploration/handle-outliers" ? '#D3ECF3' : '' }}
                             >
                                 Handle Outliers
                             </MenuItem>
@@ -73,15 +79,26 @@ const Navbar: React.FC = () => {
                             </MenuItem>
                             <MenuItem
                                 component={<Link to="/create-model/data-exploration/explore-relationships" />}
+                                style={{ backgroundColor: location.pathname === "/create-model/data-exploration/explore-relationships" ? '#D3ECF3' : '' }}
                             >
                                 Explore Relationships
                             </MenuItem>
                         </SubMenu>
                         <SubMenu label="Train Model" icon={<PlayCircle />}>
-                            <MenuItem> Select Features </MenuItem>
+                            <MenuItem
+                                component={<Link to="/create-model/train-model/select-features" />}
+                                style={{ backgroundColor: location.pathname === "/create-model/train-model/select-features" ? '#D3ECF3' : '' }}
+                            >
+                                Select Features
+                            </MenuItem>
                             <MenuItem> Feature Engineering </MenuItem>
                             <MenuItem> Choose Model </MenuItem>
-                            <MenuItem> Train </MenuItem>
+                            <MenuItem
+                                component={<Link to="/create-model/train-model/train" />}
+                                style={{ backgroundColor: location.pathname === "/create-model/train-model/train" ? '#D3ECF3' : '' }}
+                            >
+                                Train
+                            </MenuItem>
                         </SubMenu>
                         <SubMenu label="View Results" icon={<Preview />}>
                             <MenuItem> View </MenuItem>
