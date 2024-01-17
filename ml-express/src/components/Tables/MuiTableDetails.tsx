@@ -99,12 +99,12 @@ export const MuiTableDetails: React.FC<MuiTableDetailsProps> = ({ data, headers 
 
 
     return (
-        <div className='container h-2/3'>
+        <>
             <DataGrid
                 rows={formatRows()}
                 columns={columns}
                 disableRowSelectionOnClick
             />
-        </div>
+        </>
     );
 }

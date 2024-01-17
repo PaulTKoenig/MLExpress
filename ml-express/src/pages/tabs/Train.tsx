@@ -1,20 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useAppSelector } from "../hooks";
-import { UploadedData, uploadedDataSelector } from "../features/uploaded_data/uploadedDataSlice";
-import { LogisticRegression } from '../models';
+import React, { useState } from 'react';
+import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
+import { LogisticRegression } from '../../models';
 import Button from '@mui/material/Button';
 
-const Train: React.FC = () => {
+const Train: React.FC<UploadedData> = ({ data, headers }) => {
 
-	const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [] });
 	const [loss, setLoss] = useState<number[]>([]);
-
-	const selectedUploadedDatas = useAppSelector(uploadedDataSelector);
-
-	useEffect(() => {
-		setUploadedData(selectedUploadedDatas);
-	}, [selectedUploadedDatas]);
-
 
 	let featureLabels = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
 	let outputLabel = ['Outcome']
@@ -23,7 +14,7 @@ const Train: React.FC = () => {
 		const features: number[][] = [];
 		const labels: number[] = [];
 
-		uploadedData.data.forEach((dataRow: string[]) => {
+		data.forEach((dataRow: string[]) => {
 
 			const results: number[] = [];
 
@@ -65,7 +56,7 @@ const Train: React.FC = () => {
 	}
 
 	return (
-		<div className='container m-16 ml-28'>
+		<div className='container p-16 pt-8'>
 			<div className='mb-8 text-3xl font-bold'>Train Model</div>
 			<div>
 				<Button onClick={() => trainModel()} variant="outlined">Preview Data</Button>

@@ -2,12 +2,11 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import ExploreRelationships from './tabs/ExploreRelationships';
-import HandleDuplicates from './tabs/HandleDuplicates';
-import HandleOutliers from './tabs/HandleOutliers';
-import { useEffect, useState } from 'react';
+import SelectFeatures from './tabs/SelectFeatures';
+import Train from './tabs/Train';
 import { useAppSelector } from "../hooks";
 import { UploadedData, uploadedDataSelector } from "../features/uploaded_data/uploadedDataSlice";
+import { useEffect, useState } from 'react';
 import { CustomTabPanel } from '../components/CustomTabPanel';
 
 export default function BasicTabs() {
@@ -37,27 +36,23 @@ export default function BasicTabs() {
                     allowScrollButtonsMobile
                     aria-label="scrollable force tabs"
                 >
-                    <Tab label="Explore Relationships" />
-                    <Tab label="Handle Duplicates" />
-                    <Tab label="Handle Outliers" />
-                    <Tab label="Handle Qualitative" />
-                    <Tab label="Transform Features" />
+                    <Tab label="Select Features" />
+                    <Tab label="Feature Engineering" />
+                    <Tab label="Choose Model" />
+                    <Tab label="Train" />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <ExploreRelationships data={uploadedData.data} headers={uploadedData.headers} />
+                <SelectFeatures data={uploadedData.data} headers={uploadedData.headers} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                <HandleDuplicates data={uploadedData.data} headers={uploadedData.headers} />
+                Item Two
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                <HandleOutliers data={uploadedData.data} headers={uploadedData.headers} />
+            <CustomTabPanel value={value} index={2}>
+                Item Three
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                TrHandle Qualitative Data
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                Transform Features
+            <CustomTabPanel value={value} index={3}>
+                <Train data={uploadedData.data} headers={uploadedData.headers} />
             </CustomTabPanel>
         </Box>
     );

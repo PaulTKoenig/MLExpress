@@ -102,7 +102,7 @@ export const MuiTableSelectable: React.FC<MuiTableSelectableProps> = ({ data, he
 
 
   return (
-    <div className='container' style={{ maxHeight: '66vh' }}>
+    <>
       <DataGrid
         rows={formatRows()}
         columns={columns}
@@ -112,6 +112,6 @@ export const MuiTableSelectable: React.FC<MuiTableSelectableProps> = ({ data, he
         }}
         rowSelectionModel={rowSelectionModel}
       />
-    </div>
+    </>
   );
 }

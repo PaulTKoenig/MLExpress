@@ -28,12 +28,12 @@ export const MuiTableFull: React.FC<MuiTableFullProps> = ({ data, headers }) => 
 
 
     return (
-        <div className='container' style={{ height: '66vh' }}>
+        <>
             <DataGrid
                 rows={formatRows()}
                 columns={formatColumns()}
                 disableRowSelectionOnClick
             />
-        </div>
+        </>
     );
 }
