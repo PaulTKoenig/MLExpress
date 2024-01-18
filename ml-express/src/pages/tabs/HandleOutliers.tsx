@@ -3,7 +3,9 @@ import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
 import { FeatureRangePlot } from "../../components/Plots/FeatureRangePlot";
 
 
-const DataExploration: React.FC<UploadedData> = ({ data, headers }) => {
+const DataExploration: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
+
+    const { data, headers } = uploadedData;
 
     const getPlotData = () => {
         let plotData: { x: string; y: number; }[] = data.flatMap(function (value) {

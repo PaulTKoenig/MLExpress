@@ -4,9 +4,11 @@ import { RootState } from "../../store";
 export interface UploadedData {
   headers: string[];
   data: any[];
+  predictedFeature: string;
+  columnsToPredict: string[];
 }
 
-const initialState: UploadedData = { headers: [], data: []};
+const initialState: UploadedData = { headers: [], data: [], predictedFeature: "", columnsToPredict: [] };
 
 export const uploadedDataSlice = createSlice({
   name: "file",

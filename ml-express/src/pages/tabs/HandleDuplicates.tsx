@@ -2,7 +2,9 @@ import React from 'react';
 import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
 import { MuiTableFull } from "../../components/Tables/MuiTableFull";
 
-const UploadDataset: React.FC<UploadedData> = ({ data, headers }) => {
+const UploadDataset: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
+
+    const { data, headers } = uploadedData;
 
     const findDuplicates = () => {
         let entries = new Map();
@@ -33,11 +35,9 @@ const UploadDataset: React.FC<UploadedData> = ({ data, headers }) => {
         <div className='container p-16 pt-8'>
             <div className='mb-12 text-3xl font-bold'>Handle Duplicates</div>
             <div className="grid grid-cols-12">
-                <div className=""></div>
-                <div className="col-span-10" style={{ maxHeight: '75vh' }}>
+                <div className="col-span-12" style={{ maxHeight: '75vh' }}>
                     <MuiTableFull data={findDuplicates()} headers={headers} />
                 </div>
-                <div className=""></div>
             </div>
         </div>
     );

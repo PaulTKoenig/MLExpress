@@ -17,7 +17,7 @@ export default function BasicTabs() {
         setValue(newValue);
     };
 
-    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [] });
+    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [], predictedFeature: "", columnsToPredict: [] });
 
 	const selectedUploadedDatas = useAppSelector(uploadedDataSelector);
 
@@ -42,10 +42,10 @@ export default function BasicTabs() {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <ImportFile data={uploadedData.data} headers={uploadedData.headers} />
+                <ImportFile uploadedData={uploadedData} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                <ViewFullDataset data={uploadedData.data} headers={uploadedData.headers} />
+                <ViewFullDataset uploadedData={uploadedData} />
             </CustomTabPanel>
         </Box>
     );

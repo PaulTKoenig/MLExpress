@@ -17,7 +17,7 @@ export default function BasicTabs() {
         setValue(newValue);
     };
 
-    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [] });
+    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [], predictedFeature: "", columnsToPredict: [] });
 
 	const selectedUploadedDatas = useAppSelector(uploadedDataSelector);
 
@@ -31,7 +31,6 @@ export default function BasicTabs() {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    centered
                     variant="scrollable"
                     scrollButtons
                     allowScrollButtonsMobile
@@ -45,18 +44,18 @@ export default function BasicTabs() {
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <ExploreRelationships data={uploadedData.data} headers={uploadedData.headers} />
+                <ExploreRelationships uploadedData={uploadedData} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                <HandleDuplicates data={uploadedData.data} headers={uploadedData.headers} />
+                <HandleDuplicates uploadedData={uploadedData} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                <HandleOutliers data={uploadedData.data} headers={uploadedData.headers} />
+            <CustomTabPanel value={value} index={2}>
+                <HandleOutliers uploadedData={uploadedData} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                TrHandle Qualitative Data
+            <CustomTabPanel value={value} index={3}>
+                Handle Qualitative Data
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel value={value} index={4}>
                 Transform Features
             </CustomTabPanel>
         </Box>

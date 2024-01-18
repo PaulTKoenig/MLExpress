@@ -4,7 +4,9 @@ import { ScatterPlot } from "../../components/Plots/ScatterPlot";
 import DropdownSelect from "../../components/DropdownSelect";
 
 
-const ExploreRelationships: React.FC<UploadedData> = ({ data, headers }) => {
+const ExploreRelationships: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
+
+	const { data, headers } = uploadedData;
 
 	const [xAxis, setXAxis] = useState<string>("");
 	const [yAxis, setYAxis] = useState<string>("");

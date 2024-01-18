@@ -5,7 +5,9 @@ import PreviewDataModal from '../../components/PreviewDataModal';
 import { useAppDispatch } from "../../hooks";
 import { UploadedData, setUploadedData } from "../../features/uploaded_data/uploadedDataSlice";
 
-const ImportFile: React.FC<UploadedData> = ({ data, headers }) => {
+const ImportFile: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
+
+	const { data, headers } = uploadedData;
 
 	const dispatch = useAppDispatch();
 
@@ -22,19 +24,15 @@ const ImportFile: React.FC<UploadedData> = ({ data, headers }) => {
 					{data.length > 0 ? (
 						<>
 							<>
-								<div className=""></div>
-								<div className="col-span-10" style={{ maxHeight: '75vh' }}>
+								<div className="col-span-12" style={{ maxHeight: '75vh' }}>
 									<MuiTableDetails headers={headers} data={data} />
 								</div>
-								<div className=""></div>
 							</>
 
 							<>
-								<div className="col-span-9"></div>
-								<div className="col-span-2">
+								<div className="col-start-11 col-span-2">
 									<PreviewDataModal data={data} />
 								</div>
-								<div className="col-span-1"></div>
 							</>
 						</>
 					) : null}

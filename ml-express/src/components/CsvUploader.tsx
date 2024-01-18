@@ -35,7 +35,7 @@ const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
         });
 
         if (csvData.meta && csvData.meta.fields) {
-          onUpload({ headers: csvData.meta.fields, data: csvData.data });
+          onUpload({ headers: csvData.meta.fields, data: csvData.data, predictedFeature: "", columnsToPredict: [] });
         }
       }
     };

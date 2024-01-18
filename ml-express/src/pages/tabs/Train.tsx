@@ -3,12 +3,11 @@ import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
 import { LogisticRegression } from '../../models';
 import Button from '@mui/material/Button';
 
-const Train: React.FC<UploadedData> = ({ data, headers }) => {
+const Train: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
+
+	const { data, predictedFeature, columnsToPredict } = uploadedData;
 
 	const [loss, setLoss] = useState<number[]>([]);
-
-	let featureLabels = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age']
-	let outputLabel = ['Outcome']
 
 	const formatTrainingData = () => {
 		const features: number[][] = [];
@@ -21,9 +20,9 @@ const Train: React.FC<UploadedData> = ({ data, headers }) => {
 			for (const key in dataRow) {
 				const value = parseFloat(dataRow[key]);
 
-				if (featureLabels.includes(key)) {
+				if (columnsToPredict.includes(key)) {
 					results.push(isNaN(value) ? NaN : value);
-				} else if (outputLabel.includes(key)) {
+				} else if ([predictedFeature].includes(key)) {
 					labels.push(isNaN(value) ? NaN : value);
 				}
 			}
@@ -59,7 +58,7 @@ const Train: React.FC<UploadedData> = ({ data, headers }) => {
 		<div className='container p-16 pt-8'>
 			<div className='mb-8 text-3xl font-bold'>Train Model</div>
 			<div>
-				<Button onClick={() => trainModel()} variant="outlined">Preview Data</Button>
+				<Button onClick={() => trainModel()} variant="outlined">Train Model</Button>
 				{loss.map(value => <div>{value}</div>)}
 			</div>
 		</div>

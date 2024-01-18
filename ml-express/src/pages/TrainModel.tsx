@@ -9,14 +9,14 @@ import { UploadedData, uploadedDataSelector } from "../features/uploaded_data/up
 import { useEffect, useState } from 'react';
 import { CustomTabPanel } from '../components/CustomTabPanel';
 
-export default function BasicTabs() {
+export default function TrainModel() {
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
 
-    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [] });
+    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [], predictedFeature: "", columnsToPredict: [] });
 
 	const selectedUploadedDatas = useAppSelector(uploadedDataSelector);
 
@@ -30,7 +30,6 @@ export default function BasicTabs() {
                 <Tabs
                     value={value}
                     onChange={handleChange}
-                    centered
                     variant="scrollable"
                     scrollButtons
                     allowScrollButtonsMobile
@@ -38,21 +37,17 @@ export default function BasicTabs() {
                 >
                     <Tab label="Select Features" />
                     <Tab label="Feature Engineering" />
-                    <Tab label="Choose Model" />
-                    <Tab label="Train" />
+                    <Tab label="Compare Models" />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <SelectFeatures data={uploadedData.data} headers={uploadedData.headers} />
+                <SelectFeatures uploadedData={uploadedData} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
-                Item Two
+                Feature Engineering
             </CustomTabPanel>
             <CustomTabPanel value={value} index={2}>
-                Item Three
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={3}>
-                <Train data={uploadedData.data} headers={uploadedData.headers} />
+                <Train uploadedData={uploadedData} />
             </CustomTabPanel>
         </Box>
     );

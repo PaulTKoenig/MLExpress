@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
     const { collapseSidebar } = useProSidebar();
     const location = useLocation();
 
-    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [] });
+    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [], predictedFeature: "", columnsToPredict: [] });
 
 	const selectedUploadedDatas = useAppSelector(uploadedDataSelector);
 

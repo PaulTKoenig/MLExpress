@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { DataGrid, GridColDef, GridRowSelectionModel } from '@mui/x-data-grid';
 import { convertStringToType, getRandomExampleValue } from '../../utils';
+import { useEffect } from 'react';
 
 interface MuiTableSelectableProps {
   data: any[];
   headers: string[];
+  predictedValue: string;
+  handleColumnsCheckedChange: (columnsToPredict: string[]) => void;
 }
 
-export const MuiTableSelectable: React.FC<MuiTableSelectableProps> = ({ data, headers }) => {
-
-  const [rowSelectionModel, setRowSelectionModel] =
-    React.useState<GridRowSelectionModel>([]);
+export const MuiTableSelectable: React.FC<MuiTableSelectableProps> = ({ data, headers, predictedValue, handleColumnsCheckedChange }) => {
 
   const columns: GridColDef[] = [
     {
@@ -97,9 +97,28 @@ export const MuiTableSelectable: React.FC<MuiTableSelectableProps> = ({ data, he
   };
 
   const formatRows = () => {
-    return headers.map((columnName, index) => (getColumnStats(columnName, index)));
+    return headers
+      .filter(columnName => columnName !== predictedValue)
+      .map((columnName, index) => getColumnStats(columnName, index));
   };
 
+  const [rowSelectionModel, setRowSelectionModel] =
+    React.useState<GridRowSelectionModel>(formatRows().map((row) => row.id));
+
+  useEffect(() => {
+    setRowSelectionModel(formatRows().map((row) => row.id));
+  }, [predictedValue]);
+
+  useEffect(() => {
+    let columnsCheckedChangedStrings = rowSelectionModel.map((id) => String(id));
+    let columnsCheckedChanged = columnsCheckedChangedStrings.map((id) => parseInt(id, 10));
+
+    let columnChecked = formatRows()
+                          .filter((row) => columnsCheckedChanged.includes(row.id))
+                          .map((checkedRow) => checkedRow.columnName);
+
+    handleColumnsCheckedChange(columnChecked);
+  }, [rowSelectionModel]);
 
   return (
     <>
