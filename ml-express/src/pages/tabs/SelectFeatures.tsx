@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MuiTableSelectable } from "../../components/Tables/MuiTableSelectable";
 import DropdownSelect from "../../components/DropdownSelect";
 import { useAppDispatch } from "../../hooks";
@@ -9,8 +9,12 @@ const SelectFeatures: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData
 
 	const { data, headers } = uploadedData;
 
-	const [outcome, setOutcome] = useState<string>("");
 	const [columnsToPredict, setColumnsToPredict] = useState<string[]>([]);
+	const [outcome, setOutcome] = useState<string>("");
+
+	useEffect(() => {
+		setOutcome(headers[0]);
+	}, [headers]);
 
 	const dispatch = useAppDispatch();
 

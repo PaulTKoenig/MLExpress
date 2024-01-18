@@ -5,9 +5,9 @@ export class LogisticRegression {
   private model: tf.Sequential;
   private learningRate: number;
   private numEpochs: number;
-  private setLoss: Dispatch<SetStateAction<number[]>>;
+  private setLoss: Dispatch<SetStateAction<{ x: number; y: number; }[]>>;
 
-  constructor(learningRate: number, numEpochs: number, numFeatures: number, setLoss: Dispatch<SetStateAction<number[]>>) {
+  constructor(learningRate: number, numEpochs: number, numFeatures: number, setLoss: Dispatch<SetStateAction<{ x: number; y: number; }[]>>) {
     this.model = tf.sequential();
     this.model.add(tf.layers.dense({ units: 1, inputShape: [numFeatures], activation: 'sigmoid' }));
     this.model.compile({ optimizer: tf.train.adam(learningRate), loss: 'binaryCrossentropy' });
@@ -30,7 +30,7 @@ export class LogisticRegression {
         onEpochEnd: (epoch, logs) => {
           if (logs) {
             console.log(`Epoch ${epoch + 1}, Loss: ${logs.loss}`);
-            this.setLoss(prevLoss => [...prevLoss, logs.loss]);
+            this.setLoss(prevLoss => [...prevLoss, { x: epoch+1, y: logs.loss }]);
           }
         },
       },

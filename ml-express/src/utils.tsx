@@ -20,3 +20,15 @@ export function getRandomExampleValue(values: any[]): any {
     const randomIndex = Math.floor(Math.random() * values.length);
     return values[randomIndex];
 }
+
+export function removeDuplicates(array: any[]) {
+    const seen = new Set();
+    return array.filter((obj) => {
+      const stringifiedObj = JSON.stringify(obj);
+      if (!seen.has(stringifiedObj)) {
+        seen.add(stringifiedObj);
+        return true;
+      }
+      return false;
+    });
+};
