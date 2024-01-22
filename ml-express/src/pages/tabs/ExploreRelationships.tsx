@@ -47,7 +47,7 @@ const ExploreRelationships: React.FC<{ uploadedData: UploadedData }> = ({ upload
 	return (
 		<div className='container p-16 pt-8'>
 			<h2 className="text-3xl font-bold underline">Data Exploration</h2>
-			<ScatterPlot data={getPlotData(xAxis, yAxis)} />
+			<ScatterPlot data={getPlotData(xAxis, yAxis)} height={400} />
 			<div className='w-1/4'>
 				<div className=''>
 					<DropdownSelect options={headers} label={"X Axis"} selection={xAxis} handleChange={handleXAxisChange} />

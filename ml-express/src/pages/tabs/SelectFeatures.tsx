@@ -24,7 +24,6 @@ const SelectFeatures: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData
 
 	const handleColumnsCheckedChange = (columnsToPredict: string[]) => {
 		setColumnsToPredict(columnsToPredict);
-		console.log(columnsToPredict);
 	}
 
 	const handleSave = () => {

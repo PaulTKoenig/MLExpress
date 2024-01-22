@@ -3,12 +3,13 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 
 interface ScatterPlotProps {
     data: { x: number; y: number }[];
+    height: number;
 }
 
-export const ScatterPlot: React.FC<ScatterPlotProps> = ({ data }) => {
+export const ScatterPlot: React.FC<ScatterPlotProps> = ({ data, height }) => {
 
     return (
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={height}>
             <ScatterChart
                 margin={{
                     top: 20,

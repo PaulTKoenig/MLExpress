@@ -1,6 +1,5 @@
 import React from 'react';
 import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
-import { FeatureRangePlot } from "../../components/Plots/FeatureRangePlot";
 import { FeatureRngePlot } from "../../components/Plots/FeatureRngePlot";
 
 
