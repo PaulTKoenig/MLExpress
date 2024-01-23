@@ -3,12 +3,13 @@ import { RootState } from "../../store";
 
 export interface UploadedData {
   headers: string[];
+  headerTypes: { columnName: string, type: string, numDiffValues: number }[];
   data: any[];
   predictedFeature: string;
   columnsToPredict: string[];
 }
 
-const initialState: UploadedData = { headers: [], data: [], predictedFeature: "", columnsToPredict: [] };
+const initialState: UploadedData = { headers: [], headerTypes: [], data: [], predictedFeature: "", columnsToPredict: [] };
 
 export const uploadedDataSlice = createSlice({
   name: "file",

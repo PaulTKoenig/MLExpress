@@ -25,7 +25,7 @@ const UploadDataset: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData 
             .filter(([_, count]) => count > 1)
             .map(([rowString, count]) => {
                 const row = JSON.parse(rowString);
-                return { ...row, 'Number of Duplicates Entries': count };
+                return { ...row, "Number of Duplicates Entries": count };
             });
 
         return duplicatesArray;
@@ -36,7 +36,7 @@ const UploadDataset: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData 
             <div className='mb-12 text-3xl font-bold'>Handle Duplicates</div>
             <div className="grid grid-cols-12">
                 <div className="col-span-12" style={{ maxHeight: '75vh' }}>
-                    <MuiTableFull data={findDuplicates()} headers={headers} />
+                    <MuiTableFull data={findDuplicates()} headers={["Number of Duplicates Entries"].concat(headers)} />
                 </div>
             </div>
         </div>

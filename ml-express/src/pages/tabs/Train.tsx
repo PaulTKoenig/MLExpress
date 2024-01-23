@@ -36,10 +36,12 @@ const TrainModel: React.FC<TrainModelProps> = ({ features, labels, modelType }) 
 				.then(() => {
 					model.predict(features, labels);
 
-					setModelResults({ accuracy: model.accuracy, 
-									   recall: model.recall, 
-									   precision: model.precision, 
-									   f1score: model.f1score });
+					setModelResults({
+						accuracy: model.accuracy,
+						recall: model.recall,
+						precision: model.precision,
+						f1score: model.f1score
+					});
 				})
 				.catch(error => {
 					console.error("Error during training:", error);
@@ -51,10 +53,12 @@ const TrainModel: React.FC<TrainModelProps> = ({ features, labels, modelType }) 
 
 			model.predict(test.features, test.labels);
 
-			setModelResults({ accuracy: model.accuracy, 
-				recall: model.recall, 
-				precision: model.precision, 
-				f1score: model.f1score });
+			setModelResults({
+				accuracy: model.accuracy,
+				recall: model.recall,
+				precision: model.precision,
+				f1score: model.f1score
+			});
 		}
 
 	}, []);
@@ -65,7 +69,7 @@ const TrainModel: React.FC<TrainModelProps> = ({ features, labels, modelType }) 
 			<div className='col-span-6'>
 				<ScatterPlot data={loss} height={200} />
 			</div>
-			{ (modelResults.accuracy !== 0 && modelResults.recall !== 0 && modelResults.precision !== 0 && modelResults.f1score !== 0) &&
+			{(modelResults.accuracy !== 0 && modelResults.recall !== 0 && modelResults.precision !== 0 && modelResults.f1score !== 0) &&
 				<div className='col-span-3'>
 					<div>Accuracy: {modelResults.accuracy}</div>
 					<div>Recall: {modelResults.recall}</div>
@@ -110,7 +114,6 @@ const Train: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
 	const [trainedModels, setTrainedModels] = useState<string[]>([]);
 
 	const trainModel = () => {
-		let numModels = trainedModels.length;
 		setTrainedModels(prevModels => [...prevModels, model]);
 	}
 

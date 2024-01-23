@@ -1,5 +1,6 @@
 import React, { ChangeEvent, DragEvent, useState, useRef } from 'react';
 import { UploadedData } from "../features/uploaded_data/uploadedDataSlice";
+import { convertStringToType } from '../utils';
 import Papa from 'papaparse';
 
 interface CsvUploaderProps {
@@ -35,7 +36,30 @@ const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
         });
 
         if (csvData.meta && csvData.meta.fields) {
-          onUpload({ headers: csvData.meta.fields, data: csvData.data, predictedFeature: "", columnsToPredict: [] });
+
+          let headerTypes = csvData.meta.fields.map((columnName, index) => {
+
+            let data: any[] = csvData.data;
+            let values = data.map((row) => row[columnName]);
+
+            let inputType = String(typeof convertStringToType(values[0]));
+            let numDiffValues = new Set(values).size;
+
+            if (inputType === "number") {
+              const validNumberValues = values.map((str) => parseFloat(str)).filter((num) => !isNaN(num));
+              numDiffValues = new Set(validNumberValues).size;
+
+              if (numDiffValues <= 10) inputType = "categorical";
+            }
+
+            return {
+              columnName: columnName,
+              type: inputType,
+              numDiffValues: numDiffValues,
+            };
+          });
+
+          onUpload({ headers: csvData.meta.fields, headerTypes: headerTypes, data: csvData.data, predictedFeature: "", columnsToPredict: [] });
         }
       }
     };

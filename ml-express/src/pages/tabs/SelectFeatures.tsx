@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 
 const SelectFeatures: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
 
-	const { data, headers } = uploadedData;
+	const { data, headers, headerTypes } = uploadedData;
 
 	const [columnsToPredict, setColumnsToPredict] = useState<string[]>([]);
 	const [outcome, setOutcome] = useState<string>("");
@@ -27,7 +27,7 @@ const SelectFeatures: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData
 	}
 
 	const handleSave = () => {
-		dispatch(setUploadedData({ headers: headers, data: data, predictedFeature: outcome, columnsToPredict: columnsToPredict }));
+		dispatch(setUploadedData({ headers: headers, headerTypes: headerTypes, data: data, predictedFeature: outcome, columnsToPredict: columnsToPredict }));
 	}
 
 	return (

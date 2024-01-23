@@ -17,7 +17,7 @@ export default function BasicTabs() {
         setValue(newValue);
     };
 
-    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], data: [], predictedFeature: "", columnsToPredict: [] });
+    const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], headerTypes: [], data: [], predictedFeature: "", columnsToPredict: [] });
 
 	const selectedUploadedDatas = useAppSelector(uploadedDataSelector);
 
