@@ -24,7 +24,7 @@ export const MuiTableDetails: React.FC<MuiTableDetailsProps> = ({ data, headers 
         },
         {
             field: 'numDiffValues',
-            headerName: 'Number of Different Values',
+            headerName: 'Unique Values',
             minWidth: 150,
             flex: 1,
         },

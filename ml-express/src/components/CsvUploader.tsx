@@ -79,12 +79,13 @@ const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
 
   return (
     <div
+      className='text-xl'
       onDrop={handleDrop}
       onDragOver={handleDragOver}
       style={{
         border: '2px dashed #aaa',
         borderRadius: '5px',
-        padding: '40px 60px',
+        padding: '160px',
         textAlign: 'center',
         cursor: 'pointer',
       }}
@@ -101,7 +102,13 @@ const CsvUploader: React.FC<CsvUploaderProps> = ({ onUpload }) => {
       <label htmlFor="fileInput" style={{ cursor: 'pointer' }}>
         Choose File
       </label>
-      {file && <p>Selected file: {file.name}</p>}
+      {file &&
+        <p className='flex justify-center'>
+          Selected file: &nbsp;
+          <p className='text-green-500'>
+            {file.name}
+          </p>
+        </p>}
     </div>
   );
 };

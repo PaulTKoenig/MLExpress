@@ -7,6 +7,7 @@ import { HyperparameterAccordian } from "../../components/HyperparameterAccordia
 import DropdownSelect from "../../components/DropdownSelect";
 import { randomSplit } from '../../utils';
 import { RandomForest } from '../../models/RandomForest';
+import LinearProgress from '@mui/material/LinearProgress';
 
 
 interface TrainModelProps {
@@ -19,6 +20,7 @@ const TrainModel: React.FC<TrainModelProps> = ({ features, labels, modelType }) 
 
 	const [loss, setLoss] = useState<{ x: number; y: number; }[]>([]);
 	const [modelResults, setModelResults] = useState<{ accuracy: number, recall: number, precision: number, f1score: number }>({ accuracy: 0, recall: 0, precision: 0, f1score: 0 });
+	const [finishedTraining, setFinishedTraining] = useState<Boolean>(false);
 
 	let learningRate = 0.01;
 	let numEpochs = 100;
@@ -42,6 +44,8 @@ const TrainModel: React.FC<TrainModelProps> = ({ features, labels, modelType }) 
 						precision: model.precision,
 						f1score: model.f1score
 					});
+
+					setFinishedTraining(true);
 				})
 				.catch(error => {
 					console.error("Error during training:", error);
@@ -59,23 +63,39 @@ const TrainModel: React.FC<TrainModelProps> = ({ features, labels, modelType }) 
 				precision: model.precision,
 				f1score: model.f1score
 			});
+
+			setFinishedTraining(true);
 		}
 
 	}, []);
 
 	return (
 		<>
-			<div className='col-start-2 col-span-2 text-xl'>{modelType}</div>
-			<div className='col-span-6'>
-				<ScatterPlot data={loss} height={200} />
-			</div>
-			{(modelResults.accuracy !== 0 && modelResults.recall !== 0 && modelResults.precision !== 0 && modelResults.f1score !== 0) &&
-				<div className='col-span-3'>
-					<div>Accuracy: {modelResults.accuracy}</div>
-					<div>Recall: {modelResults.recall}</div>
-					<div>Precision: {modelResults.precision}</div>
-					<div>F1 Score: {modelResults.f1score}</div>
+			<div className='col-start-2 col-span-3 text-xl'>{modelType}</div>
+
+			{!finishedTraining &&
+				<div className='col-span-6 items-center'>
+					<LinearProgress />
 				</div>
+			}
+
+			{
+				// <div className='col-span-6'>
+				// 	  <ScatterPlot data={loss} height={200} />
+				// </div>
+			}
+
+			{finishedTraining &&
+				<>
+					<div className='col-span-4'>
+						<div>Accuracy: {modelResults.accuracy}</div>
+						<div>Recall: {modelResults.recall}</div>
+					</div>
+					<div className='col-span-4'>
+						<div>Precision: {modelResults.precision}</div>
+						<div>F1 Score: {modelResults.f1score}</div>
+					</div>
+				</>
 			}
 		</>
 	)
@@ -139,15 +159,15 @@ const Train: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
 					<HyperparameterAccordian />
 				</div>
 			</div>
-			<div className="grid grid-cols-12 items-center">
-				{trainedModels.map((modelType) => {
-					let { features, labels } = formatTrainingData();
-					return (
+			{trainedModels.map((modelType) => {
+				let { features, labels } = formatTrainingData();
+				return (
+					<div className="grid grid-cols-12 items-center pt-12">
 						<TrainModel features={features} labels={labels} modelType={modelType} />
-					)
-				})
-				}
-			</div>
+					</div>
+				)
+			})
+			}
 		</div>
 	);
 }

@@ -22,7 +22,7 @@ export const ViolinPlot = ({ width, height, data }: ViolinPlotProps) => {
     const [min, max] = d3.extent(data.map((d) => d.value)) as [number, number];
     const groups = data
       .map((d) => d.name)
-      .filter((x, i, a) => a.indexOf(x) == i);
+      .filter((x, i, a) => a.indexOf(x) === i);
     return { min, max, groups };
   }, [data]);
 

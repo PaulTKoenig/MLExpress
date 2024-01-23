@@ -3,6 +3,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import ImportFile from './tabs/ImportFile';
+import PreviewFeatures from './tabs/PreviewFeatures';
 import ViewFullDataset from './tabs/ViewFullDataset';
 import { useAppSelector } from "../hooks";
 import { UploadedData, uploadedDataSelector } from "../features/uploaded_data/uploadedDataSlice";
@@ -13,7 +14,7 @@ export default function BasicTabs() {
     
     const [value, setValue] = React.useState(0);
 
-    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    const handleChange = (event: React.SyntheticEvent | undefined, newValue: number) => {
         setValue(newValue);
     };
 
@@ -38,13 +39,17 @@ export default function BasicTabs() {
                     aria-label="scrollable force tabs"
                 >
                     <Tab label="Import File" />
+                    <Tab label="Preview Features" disabled={uploadedData.data.length === 0} />
                     <Tab label="View Full Dataset" disabled={uploadedData.data.length === 0} />
                 </Tabs>
             </Box>
             <CustomTabPanel value={value} index={0}>
-                <ImportFile uploadedData={uploadedData} />
+                <ImportFile handleChange={handleChange} />
             </CustomTabPanel>
             <CustomTabPanel value={value} index={1}>
+                <PreviewFeatures uploadedData={uploadedData} />
+            </CustomTabPanel>
+            <CustomTabPanel value={value} index={2}>
                 <ViewFullDataset uploadedData={uploadedData} />
             </CustomTabPanel>
         </Box>

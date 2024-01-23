@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
 import { ScatterPlot } from "../../components/Plots/ScatterPlot";
 import DropdownSelect from "../../components/DropdownSelect";
+import { CompleteDataDistributionModal } from "../../components/CompleteDataDistributionModal";
 
 
 const ExploreRelationships: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
@@ -46,7 +47,7 @@ const ExploreRelationships: React.FC<{ uploadedData: UploadedData }> = ({ upload
 
 	return (
 		<div className='container p-16 pt-8'>
-			<h2 className="text-3xl font-bold underline">Data Exploration</h2>
+			<h2 className="text-3xl font-bold">Explore Relationships</h2>
 			<ScatterPlot data={getPlotData(xAxis, yAxis)} height={400} />
 			<div className='w-1/4'>
 				<div className=''>
@@ -56,6 +57,7 @@ const ExploreRelationships: React.FC<{ uploadedData: UploadedData }> = ({ upload
 					<DropdownSelect options={headers} label={"Y Axis"} selection={yAxis} handleChange={handleYAxisChange} />
 				</div>
 			</div>
+			<CompleteDataDistributionModal uploadedData={uploadedData} />
 		</div>
 	)
 };

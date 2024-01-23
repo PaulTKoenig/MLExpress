@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar } from "react-pro-sidebar";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import AssistWalker from "@mui/icons-material/AssistWalker";
+import CleanHands from "@mui/icons-material/CleanHands";
 import Info from "@mui/icons-material/Info";
 import Cottage from "@mui/icons-material/Cottage";
 import PlayCircle from "@mui/icons-material/PlayCircle";
@@ -63,7 +64,15 @@ const Navbar: React.FC = () => {
                             icon={<AutoFixHigh />}
                             disabled={uploadedData.data.length === 0}
                         >
-                            Data Exploration
+                            Explore Data
+                        </MenuItem>
+                        <MenuItem
+                            component={<Link to="/create-model/data-cleaning" />}
+                            style={{ backgroundColor: location.pathname === "/create-model/data-cleaning" ? '#D3ECF3' : '' }}
+                            icon={<CleanHands />}
+                            disabled={uploadedData.data.length === 0}
+                        >
+                            Clean Data
                         </MenuItem>
                         <MenuItem
                             component={<Link to="/create-model/train-model" />}

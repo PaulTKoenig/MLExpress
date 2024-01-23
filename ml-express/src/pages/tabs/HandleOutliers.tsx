@@ -3,10 +3,8 @@ import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
 import { SimpleBarChart } from "../../components/Plots/SimpleBarChart";
 import DropdownSelect from "../../components/DropdownSelect";
 import { CompleteDataDistributionModal } from "../../components/CompleteDataDistributionModal";
-import TextField from '@mui/material/TextField';
 import * as d3 from "d3-array";
 import { ViolinPlot } from '../../components/Plots/ViolinPlot';
-import { violin } from "./data";
 
 
 const DataExploration: React.FC<{ uploadedData: UploadedData }> = ({ uploadedData }) => {
