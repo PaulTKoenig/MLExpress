@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
 import { ScatterPlot } from "../../components/Plots/ScatterPlot";
 import DropdownSelect from "../../components/DropdownSelect";
@@ -13,17 +13,43 @@ const ExploreRelationships: React.FC<{ uploadedData: UploadedData }> = ({ upload
 	const [yAxis, setYAxis] = useState<string>("");
 
 	useEffect(() => {
-		setXAxis(headers[0]);
-		setYAxis(headers[0]);
-	}, [headers]);
+		if (headers.length > 0 && xAxis === "" && yAxis === "") {
+        	setXAxis(headers[0])
+			setYAxis(headers[0])
+		}
+    }, [headers])
 
-	const getPlotData = (xColumn: string, yColumn: string) => {
+	useEffect(() => {
+        if (xAxis !== "" && xAxis !== undefined)
+            localStorage.setItem("Explore Relationships Selected xAxis", xAxis);
+    }, [xAxis])
+
+	useEffect(() => {
+        if (yAxis !== "" && yAxis !== undefined)
+            localStorage.setItem("Explore Relationships Selected yAxis", yAxis);
+    }, [yAxis])
+
+    useEffect(() => {
+		const storedXValue = localStorage.getItem("Explore Relationships Selected xAxis");
+
+        if (storedXValue !== null) {
+			console.log(storedXValue)
+            setXAxis(storedXValue);
+		}
+
+        const storedYValue = localStorage.getItem("Explore Relationships Selected yAxis");
+
+        if (storedYValue !== null)
+            setYAxis(storedYValue);
+    }, []);
+
+	const memoizedResult = useMemo(() => {
 		const uniqueData = new Set<string>();
 		const plotData: { x: number; y: number; }[] = [];
 
 		data.forEach(function (value) {
-			const x = parseFloat(value[xColumn]);
-			const y = parseFloat(value[yColumn]);
+			const x = parseFloat(value[xAxis]);
+			const y = parseFloat(value[yAxis]);
 
 			if (!isNaN(x) && !isNaN(y)) {
 				const entryKey = `${x}-${y}`;
@@ -35,7 +61,7 @@ const ExploreRelationships: React.FC<{ uploadedData: UploadedData }> = ({ upload
 		});
 
 		return plotData;
-	}
+	  }, [xAxis, yAxis]);
 
 	const handleXAxisChange = (updatedSelection: string) => {
 		setXAxis(updatedSelection);
@@ -48,7 +74,9 @@ const ExploreRelationships: React.FC<{ uploadedData: UploadedData }> = ({ upload
 	return (
 		<div className='container p-16 pt-8'>
 			<h2 className="text-3xl font-bold">Explore Relationships</h2>
-			<ScatterPlot data={getPlotData(xAxis, yAxis)} height={400} />
+
+			<ScatterPlot data={memoizedResult} height={400} />
+			
 			<div className='w-1/4'>
 				<div className=''>
 					<DropdownSelect options={headers} label={"X Axis"} selection={xAxis} handleChange={handleXAxisChange} />

@@ -11,11 +11,30 @@ import { useAppSelector } from "../hooks";
 import { UploadedData, uploadedDataSelector } from "../features/uploaded_data/uploadedDataSlice";
 import { CustomTabPanel } from '../components/CustomTabPanel';
 
-export default function BasicTabs() {
-    const [value, setValue] = React.useState(0);
+export default function DataExploration() {
+
+    const [tabNumber, setTabNumber] = React.useState(0);
+    const [isFirstRender, setIsFirstRender] = React.useState(true);
+
+    useEffect(() => {
+        if (!isFirstRender) {
+            localStorage.setItem("Data Exploration", String(tabNumber));
+        } else {
+            setIsFirstRender(false);
+        }
+    }, [tabNumber])
+
+    useEffect(() => {
+        const storedValue = localStorage.getItem("Data Exploration");
+
+        if (storedValue !== null) {
+            let parsedValue = parseInt(storedValue, 10);
+            setTabNumber(parsedValue);
+        }
+    }, []);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+        setTabNumber(newValue);
     };
 
     const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], headerTypes: [], data: [], predictedFeature: "", columnsToPredict: [] });
@@ -26,11 +45,20 @@ export default function BasicTabs() {
 		setUploadedData(selectedUploadedDatas);
 	}, [selectedUploadedDatas]);
 
+    const localStorageUploadedData = localStorage.getItem("Uploaded Data");
+
+    useEffect(() => {
+
+        if (selectedUploadedDatas.data.length === 0 && localStorageUploadedData !== null)
+            setUploadedData(JSON.parse(localStorageUploadedData));
+
+	}, [localStorageUploadedData]);
+
     return (
         <Box sx={{ width: '100%' }}>
             <Box padding={1} display="flex" justifyContent="center" width="100%" sx={{ bgcolor: 'background.paper' }}>
                 <Tabs
-                    value={value}
+                    value={tabNumber}
                     onChange={handleChange}
                     variant="scrollable"
                     scrollButtons
@@ -44,19 +72,19 @@ export default function BasicTabs() {
                     <Tab label="Correlations" />
                 </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={tabNumber} index={0}>
                 <ExploreRelationships uploadedData={uploadedData} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel value={tabNumber} index={1}>
                 <HandleDuplicates uploadedData={uploadedData} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
+            <CustomTabPanel value={tabNumber} index={2}>
                 <HistogramDistribution uploadedData={uploadedData} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={3}>
+            <CustomTabPanel value={tabNumber} index={3}>
                 <ViolinPlotDistribution uploadedData={uploadedData} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={4}>
+            <CustomTabPanel value={tabNumber} index={4}>
                 Correlations
             </CustomTabPanel>
         </Box>

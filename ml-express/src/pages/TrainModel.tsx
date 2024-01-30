@@ -10,10 +10,29 @@ import { useEffect, useState } from 'react';
 import { CustomTabPanel } from '../components/CustomTabPanel';
 
 export default function TrainModel() {
-    const [value, setValue] = React.useState(0);
+    
+    const [tabNumber, setTabNumber] = React.useState<number>(0);
+    const [isFirstRender, setIsFirstRender] = React.useState(true);
+
+    useEffect(() => {
+        if (!isFirstRender) {
+            localStorage.setItem("Data Exploration", String(tabNumber));
+        } else {
+            setIsFirstRender(false);
+        }
+    }, [tabNumber])
+
+    useEffect(() => {
+        const storedValue = localStorage.getItem("Train Model");
+
+        if (storedValue !== null) {
+            let parsedValue = parseInt(storedValue, 10);
+            setTabNumber(parsedValue);
+        }
+    }, []);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
+        setTabNumber(newValue);
     };
 
     const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], headerTypes: [], data: [], predictedFeature: "", columnsToPredict: [] });
@@ -24,11 +43,20 @@ export default function TrainModel() {
 		setUploadedData(selectedUploadedDatas);
 	}, [selectedUploadedDatas]);
 
+    const localStorageUploadedData = localStorage.getItem("Uploaded Data");
+
+    useEffect(() => {
+
+        if (selectedUploadedDatas.data.length === 0 && localStorageUploadedData !== null)
+            setUploadedData(JSON.parse(localStorageUploadedData));
+
+	}, [localStorageUploadedData]);
+
     return (
         <Box sx={{ width: '100%' }}>
             <Box padding={1} display="flex" justifyContent="center" width="100%" sx={{ bgcolor: 'background.paper' }}>
                 <Tabs
-                    value={value}
+                    value={tabNumber}
                     onChange={handleChange}
                     variant="scrollable"
                     scrollButtons
@@ -40,13 +68,13 @@ export default function TrainModel() {
                     <Tab label="Compare Models" />
                 </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={tabNumber} index={0}>
                 <SelectFeatures uploadedData={uploadedData} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel value={tabNumber} index={1}>
                 Feature Engineering
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
+            <CustomTabPanel value={tabNumber} index={2}>
                 <Train uploadedData={uploadedData} />
             </CustomTabPanel>
         </Box>

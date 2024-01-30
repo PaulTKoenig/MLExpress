@@ -65,7 +65,6 @@ const DataExploration: React.FC<{ uploadedData: UploadedData }> = ({ uploadedDat
                 const rangeStart = bin.x0 !== undefined ? bin.x0 : 0;
                 const rangeEnd = bin.x1 !== undefined ? bin.x1 : 0;
 
-                console.log(bin)
 
                 return {
                     count: bin.length,
@@ -74,7 +73,6 @@ const DataExploration: React.FC<{ uploadedData: UploadedData }> = ({ uploadedDat
                     x1: rangeEnd,
                 }
             })
-        console.log(plotData)
         return plotData
     }
 

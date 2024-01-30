@@ -26,6 +26,17 @@ const Navbar: React.FC = () => {
 		setUploadedData(selectedUploadedDatas);
 	}, [selectedUploadedDatas]);
 
+    useEffect(() => {
+
+        let localStorageUploadedData = localStorage.getItem("Uploaded Data");
+
+        if (selectedUploadedDatas.data.length > 0)
+		    setUploadedData(selectedUploadedDatas);
+        else if (localStorageUploadedData !== null) 
+            setUploadedData(JSON.parse(localStorageUploadedData));
+
+	}, []);
+
     return (
         <div className="min-h-screen flex">
             <Sidebar className="">

@@ -10,28 +10,48 @@ import { UploadedData, uploadedDataSelector } from "../features/uploaded_data/up
 import { useEffect, useState } from 'react';
 import { CustomTabPanel } from '../components/CustomTabPanel';
 
-export default function BasicTabs() {
+export default function UploadDataset() {
     
-    const [value, setValue] = React.useState(0);
+    const [tabNumber, setTabNumber] = React.useState(0);
+    const [isFirstRender, setIsFirstRender] = React.useState(true);
+
+    useEffect(() => {
+        if (!isFirstRender) {
+            localStorage.setItem("Data Exploration", String(tabNumber));
+        } else {
+            setIsFirstRender(false);
+        }
+    }, [tabNumber])
 
     const handleChange = (event: React.SyntheticEvent | undefined, newValue: number) => {
-        setValue(newValue);
+        setTabNumber(newValue);
     };
 
     const [uploadedData, setUploadedData] = useState<UploadedData>({ headers: [], headerTypes: [], data: [], predictedFeature: "", columnsToPredict: [] });
 
 	const selectedUploadedDatas = useAppSelector(uploadedDataSelector);
 
-	useEffect(() => {
+    useEffect(() => {
 		setUploadedData(selectedUploadedDatas);
 	}, [selectedUploadedDatas]);
+
+	useEffect(() => {
+
+        let localStorageUploadedData = localStorage.getItem("Uploaded Data");
+
+        if (selectedUploadedDatas.data.length > 0)
+		    setUploadedData(selectedUploadedDatas);
+        else if (localStorageUploadedData !== null) 
+            setUploadedData(JSON.parse(localStorageUploadedData));
+
+	}, []);
 
 
     return (
         <Box sx={{ width: '100%' }}>
             <Box display="flex" justifyContent="center" width="100%" sx={{ bgcolor: 'background.paper' }}>
                 <Tabs
-                    value={value}
+                    value={tabNumber}
                     onChange={handleChange}
                     variant="scrollable"
                     scrollButtons
@@ -43,13 +63,13 @@ export default function BasicTabs() {
                     <Tab label="View Full Dataset" disabled={uploadedData.data.length === 0} />
                 </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={tabNumber} index={0}>
                 <ImportFile handleChange={handleChange} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
+            <CustomTabPanel value={tabNumber} index={1}>
                 <PreviewFeatures uploadedData={uploadedData} />
             </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
+            <CustomTabPanel value={tabNumber} index={2}>
                 <ViewFullDataset uploadedData={uploadedData} />
             </CustomTabPanel>
         </Box>

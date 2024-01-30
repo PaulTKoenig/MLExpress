@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UploadedData } from "../../features/uploaded_data/uploadedDataSlice";
 import { SimpleBarChart } from "../../components/Plots/SimpleBarChart";
 import DropdownSelect from "../../components/DropdownSelect";
@@ -10,6 +10,19 @@ const HistogramDistribution: React.FC<{ uploadedData: UploadedData }> = ({ uploa
     const { data, headers, headerTypes } = uploadedData;
 
     const [selectedFeature, setSelectedFeature] = useState<string>(headers[0]);
+
+    useEffect(() => {
+        if (selectedFeature !== headers[0])
+            localStorage.setItem("Histogram Selected Feature", selectedFeature);
+    }, [selectedFeature])
+
+    useEffect(() => {
+        const storedValue = localStorage.getItem("Histogram Selected Feature");
+
+        if (storedValue !== null) {
+            setSelectedFeature(storedValue);
+        }
+    }, []);
 
     const handleFeatureChange = (updatedSelection: string) => {
         setSelectedFeature(updatedSelection);
@@ -62,8 +75,6 @@ const HistogramDistribution: React.FC<{ uploadedData: UploadedData }> = ({ uploa
             .map((bin) => {
                 const rangeStart = bin.x0 !== undefined ? bin.x0 : 0;
                 const rangeEnd = bin.x1 !== undefined ? bin.x1 : 0;
-
-                console.log(bin)
 
                 return {
                     count: bin.length,

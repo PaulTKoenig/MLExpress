@@ -7,7 +7,9 @@ const ImportFile: React.FC<{ handleChange: (event: React.SyntheticEvent | undefi
 
 	const dispatch = useAppDispatch();
 
-	const handleUpload = (dataset: UploadedData) => {
+	const handleUpload = async (dataset: UploadedData) => {
+		await localStorage.clear();
+		localStorage.setItem("Uploaded Data", JSON.stringify(dataset))
 		dispatch(setUploadedData(dataset));
 		handleChange(undefined, 1);
 	};
